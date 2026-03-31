@@ -1,6 +1,29 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { ensureTable } from '../_db.js'
-import { notifyNewSignup } from '../_email.js'
+import { createClient } from '@libsql/client'
+import nodemailer from 'nodemailer'
+
+function getDb() {
+  return createClient({
+    url: process.env.TURSO_DATABASE_URL!,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  })
+}
+
+async function notifyNewSignup(email: string, total: number) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, NOTIFY_EMAIL } = process.env
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !NOTIFY_EMAIL) return
+  const port = parseInt(SMTP_PORT || '587')
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST, port, secure: port === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  })
+  await transporter.sendMail({
+    from: `"PoleGP Waitlist" <${SMTP_USER}>`,
+    to: NOTIFY_EMAIL,
+    subject: `\u{1F3C1} Nuevo registro #${total} — PoleGP Waitlist`,
+    text: `Nuevo registro:\n\nEmail: ${email}\nTotal: ${total}\n\n— PoleGP`,
+  }).catch(err => console.error('[email]', err))
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -18,9 +41,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const sanitized = email.trim().toLowerCase()
-  const db = await ensureTable()
+  const db = getDb()
 
-  // Check if already registered
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS waitlist (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT UNIQUE NOT NULL,
+      created_at TEXT DEFAULT (datetime('now')),
+      ip TEXT,
+      user_agent TEXT
+    )
+  `)
+
   const existing = await db.execute({
     sql: 'SELECT 1 FROM waitlist WHERE email = ?',
     args: [sanitized],
@@ -39,7 +71,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { rows } = await db.execute('SELECT COUNT(*) as total FROM waitlist')
   const total = rows[0].total as number
 
-  // Fire-and-forget email
   notifyNewSignup(sanitized, total).catch(() => {})
 
   return res.json({ success: true, position: total })

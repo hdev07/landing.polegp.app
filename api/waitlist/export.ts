@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { ensureTable } from '../_db.js'
+import { createClient } from '@libsql/client'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const key = req.headers['x-api-key']
@@ -7,7 +7,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
-  const db = await ensureTable()
+  const db = createClient({
+    url: process.env.TURSO_DATABASE_URL!,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  })
+
   const { rows } = await db.execute('SELECT email, created_at, ip FROM waitlist ORDER BY id')
 
   const csv = 'email,created_at,ip\n' + rows.map(r => `${r.email},${r.created_at},${r.ip}`).join('\n')
