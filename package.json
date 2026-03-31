@@ -5,16 +5,27 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "npx tsx --env-file=.env server.ts",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.2",
+    "better-sqlite3": "^12.8.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "gsap": "^3.14.2",
+    "nodemailer": "^8.0.4",
     "vue": "^3.5.30"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/node": "^24.12.0",
+    "@types/nodemailer": "^7.0.11",
+    "@vercel/node": "^5.6.22",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/tsconfig": "^0.9.0",
     "tailwindcss": "^4.2.2",
