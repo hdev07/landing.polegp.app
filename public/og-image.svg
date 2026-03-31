@@ -56,17 +56,17 @@
   </text>
 
   <!-- URL -->
-  <text x="1120" y="606" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="16" fill="white" fill-opacity="0.3" text-anchor="end">polegp.app</text>
+  <text x="1120" y="606" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="16" fill="white" fill-opacity="0.3" text-anchor="end">polegp.devifly.dev</text>
 
-  <!-- Five starting lights -->
-  <circle cx="920" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="920" cy="600" r="4" fill="#E10600" opacity="0.8"/>
-  <circle cx="945" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="945" cy="600" r="4" fill="#E10600" opacity="0.8"/>
-  <circle cx="970" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="970" cy="600" r="4" fill="#E10600" opacity="0.8"/>
-  <circle cx="995" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="995" cy="600" r="4" fill="#E10600" opacity="0.8"/>
-  <circle cx="1020" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
-  <circle cx="1020" cy="600" r="4" fill="#E10600" opacity="0.8"/>
+  <!-- Five starting lights (centered) -->
+  <circle cx="550" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="550" cy="600" r="4" fill="#E10600" opacity="0.8"/>
+  <circle cx="575" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="575" cy="600" r="4" fill="#E10600" opacity="0.8"/>
+  <circle cx="600" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="600" cy="600" r="4" fill="#E10600" opacity="0.8"/>
+  <circle cx="625" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="625" cy="600" r="4" fill="#E10600" opacity="0.8"/>
+  <circle cx="650" cy="600" r="8" fill="none" stroke="#E10600" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="650" cy="600" r="4" fill="#E10600" opacity="0.8"/>
 </svg>
